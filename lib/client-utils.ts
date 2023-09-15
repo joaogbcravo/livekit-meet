@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 export function useServerUrl(region?: string) {
   const [serverUrl, setServerUrl] = useState<string | undefined>();
   useEffect(() => {
-    let endpoint = `/api/url`;
+    let endpoint = process.env.NEXT_PUBLIC_ENTRYPOINT + `/api/url`;
     if (region) {
       endpoint += `?region=${region}`;
     }

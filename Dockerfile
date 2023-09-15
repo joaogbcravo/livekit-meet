@@ -22,7 +22,8 @@ RUN yarn install
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # Run yarn build to build the app
-RUN yarn build
+RUN NEXT_PUBLIC_ENTRYPOINT=/__ENTRYPOINT__ yarn build
+ENV NEXT_PUBLIC_ENTRYPOINT=""
 
 # Set production environment
 ENV NODE_ENV production
@@ -38,6 +39,11 @@ RUN adduser --system --uid 1001 nextjs
 RUN chown nextjs:nodejs .next
 RUN chown nextjs:nodejs .next/static
 
+RUN apk add jq
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x ./entrypoint.sh
+RUN chmod -R a+w .next/
+
 # Execute with nextjs user
 USER nextjs
 
@@ -48,5 +54,6 @@ ENV PORT 3000
 # Expose the port
 EXPOSE ${PORT}
 
+ENTRYPOINT ["./entrypoint.sh"]
 # Run yarn start to start the nextjs server as the main command
 CMD ["yarn", "start"]
