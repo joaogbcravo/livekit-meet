@@ -15,11 +15,6 @@ if [ "$NEXT_PUBLIC_ENTRYPOINT" = "" ]; then
 fi
 # first we look for /__ENTRYPOINT__/ -- this should become / in the case of empty entrypoint
 #  then we look for /__ENTRYPOINT__ -- this should become "" in the case of empty entrypoint
-env
-echo "====="
-cat .env.local
-echo "====="
-
 find .next \
   -type f \
   -exec sed -i \

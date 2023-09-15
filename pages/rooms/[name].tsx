@@ -86,7 +86,7 @@ type ActiveRoomProps = {
   onLeave?: () => void;
 };
 const ActiveRoom = ({ roomName, userChoices, onLeave }: ActiveRoomProps) => {
-  const token = useToken(process.env.NEXT_PUBLIC_LK_TOKEN_ENDPOINT, roomName, {
+  const token = useToken('/__ENTRYPOINT__/api/token', roomName, {
     userInfo: {
       identity: userChoices.username,
       name: userChoices.username,
