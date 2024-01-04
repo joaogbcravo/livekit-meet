@@ -14,8 +14,6 @@ const createToken = (userInfo: AccessTokenOptions, grant: VideoGrant) => {
   return at.toJwt();
 };
 
-const roomPattern = /\w{4}\-\w{4}/;
-
 export default async function handleToken(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { roomName, identity, name, metadata } = req.query;
@@ -30,14 +28,6 @@ export default async function handleToken(req: NextApiRequest, res: NextApiRespo
     }
     if (Array.isArray(metadata)) {
       throw Error('provide max one metadata string');
-    }
-
-    // enforce room name to be xxxx-xxxx
-    // this is simple & naive way to prevent user from guessing room names
-    // please use your own authentication mechanisms in your own app
-    if (!roomName.match(roomPattern)) {
-      res.status(400).end();
-      return;
     }
 
     // if (!userSession.isAuthenticated) {
